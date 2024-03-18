@@ -1,31 +1,4 @@
 Resources:
-  AmplifyAppIAMRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service: amplify.amazonaws.com
-            Action: sts:AssumeRole
-      Policies:
-        - PolicyName: AmplifyAppPolicy
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - amplify:CreateBackendEnvironment  # Added for environment creation
-                  - amplify:GetBackendEnvironment    # Added for environment details
-                  - amplify:UpdateBackendEnvironment # Added for potential updates
-                  - amplify:CreateBranch              # Existing for branch management
-                  - amplify:DeleteBranch
-                  - amplify:GetBranch
-                  - amplify:ListBranches
-                Resource:
-                  - !Sub arn:aws:amplify:${AWS::Region}:${AWS::AccountId}:apps/${MyNextjsApp}/environments/dev/*  # Specific resource ARN pattern
-
   AmplifyApp:
     Type: AWS::Amplify::App
     Properties:
@@ -40,6 +13,8 @@ Resources:
       AppId: !GetAtt AmplifyApp.AppId
       BranchName: dev
 
+
 Outputs:
   AmplifyAppId:
     Value: !GetAtt AmplifyApp.AppId
+
